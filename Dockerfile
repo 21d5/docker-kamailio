@@ -14,6 +14,8 @@ RUN set -x \
         kamailio-presence-modules \
     && rm -rf /var/lib/apt/lists/*
 
+COPY conf /etc/kamailio/
+
 ENV SHM_MEMORY=64 \
     PKG_MEMORY=8
 
