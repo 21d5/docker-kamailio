@@ -8,7 +8,8 @@ RUN set -x \
     && apt-key adv --keyserver keyserver.ubuntu.com --recv-key FB40D3E6508EA4C8 \
     && echo "deb http://deb.kamailio.org/kamailio50 stretch main" \
         > /etc/apt/sources.list.d/kamailio.list \
-    && apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    && apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         kamailio \
         kamailio-tls-modules \
         kamailio-presence-modules \
