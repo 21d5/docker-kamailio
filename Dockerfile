@@ -18,7 +18,11 @@ RUN set -x \
 COPY conf /etc/kamailio/
 
 ENV SHM_MEMORY=64 \
-    PKG_MEMORY=8
+    PKG_MEMORY=8 \
+    DEF_PSTN_GW_IP="" \
+    DEF_PSTN_GW_PORT=5060 \
+    DEF_VOICEMAIL_SRV_IP="" \
+    DEF_VOICEMAIL_SRV_PORT=5060
 
 EXPOSE 5060/tcp 5060/udp
 
