@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+shopt -s extglob
 
 prefix='DEF_'
 file='/etc/kamailio/kamailio-local.cfg'
@@ -14,11 +15,16 @@ printenv | grep "^$prefix" | while read -r env; do
   esac
 
   def="#!define ${k#$prefix}"
-  case $v in
-    '')      ;;
-    *[0-9]*) def="$def $v" ;;
-    *)       def="$def \"$v\"" ;;
-  esac
+  if [ "$k" == "DEF_LISTEN" ]; then
+    # The listen parameter expects a complex value, which cannot be quoted
+    def="$def $v"
+  else
+    case $v in
+      ''       ) ;;
+      +([0-9]) ) def="$def $v" ;;
+      *        ) def="$def \"$v\"" ;;
+    esac
+  fi
 
   echo $def >> $file
 done
