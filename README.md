@@ -18,26 +18,26 @@ Some features can be enabled using `#!define WITH_FEATURE` directives:
 * To run in debug mode:
   - define `WITH_DEBUG`
 
-* To enable mysql:
-  - define `WITH_MYSQL`
+* To enable postgres:
+  - define `WITH_POSTGRES`
 
 * To enable authentication:
-  - enable mysql
+  - enable postgres
   - define `WITH_AUTH`
   - add users using `kamctl`
 
 * To enable IP authentication:
-  - enable mysql
+  - enable postgres
   - enable authentication
   - define `WITH_IPAUTH`
   - add IP addresses with group id `1` to `address` table
 
 * To enable persistent user location:
-  - enable mysql
+  - enable postgres
   - define `WITH_USRLOCDB`
 
 * To enable presence server:
-  - enable mysql
+  - enable postgres
   - define `WITH_PRESENCE`
 
 * To enable nat traversal:
@@ -52,15 +52,15 @@ Some features can be enabled using `#!define WITH_FEATURE` directives:
   - check `route[PSTN]` for regexp routing condition
 
 * To enable database aliases lookup:
-  - enable mysql
+  - enable postgres
   - define `WITH_ALIASDB`
 
 * To enable speed dial lookup:
-  - enable mysql
+  - enable postgres
   - define `WITH_SPEEDDIAL`
 
 * To enable multi-domain support:
-  - enable mysql
+  - enable postgres
   - define `WITH_MULTIDOMAIN`
 
 * To enable TLS support:
@@ -87,7 +87,7 @@ Some features can be enabled using `#!define WITH_FEATURE` directives:
   - adjust the value of voicemail.srv_port
 
 * To enhance accounting:
-  - enable mysql
+  - enable postgres
   - define `WITH_ACCDB`
   - add following columns to database:
     ```

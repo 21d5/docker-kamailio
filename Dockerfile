@@ -9,11 +9,13 @@ RUN set -x \
     && echo "deb http://deb.kamailio.org/kamailio50 stretch main" \
         > /etc/apt/sources.list.d/kamailio.list \
     && apt-get update \
+    && mkdir -p /usr/share/man/man1/ /usr/share/man/man7/ \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         kamailio \
         kamailio-tls-modules \
+        kamailio-postgres-modules \
         kamailio-presence-modules \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* /usr/share/man/*
 
 COPY conf /etc/kamailio/
 
