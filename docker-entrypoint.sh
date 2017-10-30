@@ -29,6 +29,13 @@ printenv | grep "^$prefix" | while read -r env; do
   echo $def >> $file
 done
 
+if [ "$DBENGINE" == "postgres" ] && [ -n "$DBHOST" ]; then
+  while ! pg_isready -h $DBHOST -p $DBPORT > /dev/null 2> /dev/null; do
+    echo "Connection check for database $DBHOST:$DBPORT failed. Retry in 5s..."
+    sleep 5
+  done
+fi
+
 if [ "$1" = 'kamailio' ]; then
   exec chroot --userspec=kamailio / /usr/sbin/kamailio -DD -E -m $SHM_MEMORY -M $PKG_MEMORY -u kamailio -g kamailio
 fi
