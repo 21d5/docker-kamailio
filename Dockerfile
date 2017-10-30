@@ -21,6 +21,9 @@ COPY conf /etc/kamailio/
 
 ENV SHM_MEMORY=64 \
     PKG_MEMORY=8 \
+    DBENGINE=postgres \
+    DBPORT=5432 \
+    DBNAME=kamailio \
     DEF_PSTN_GW_IP="" \
     DEF_PSTN_GW_PORT=5060 \
     DEF_PSTN_REGEX="^(\+|00)[1-9][0-9]{3,20}$" \
