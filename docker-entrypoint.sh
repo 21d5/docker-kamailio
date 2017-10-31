@@ -30,10 +30,17 @@ printenv | grep "^$prefix" | while read -r env; do
 done
 
 if [ "$DBENGINE" == "postgres" ] && [ -n "$DBHOST" ]; then
-  while ! pg_isready -h $DBHOST -p $DBPORT > /dev/null 2> /dev/null; do
-    echo "Connection check for database $DBHOST:$DBPORT failed. Retry in 5s..."
+  export PGHOST=$DBHOST PGPORT=$DBPORT PGDATABASE=$DBNAME
+  while ! pg_isready > /dev/null 2> /dev/null; do
+    echo "Connection check for database $PGHOST:$PGPORT failed. Retry in 5s..."
     sleep 5
   done
+
+  if [ -n "$DBROOTUSER" ] && [ -n "$DBROOTPW" ]; then
+    if ! PGPASSWORD=$DBROOTPW psql -lqt -U $DBROOTUSER | cut -d \| -f 1 | grep -qw $DBNAME; then
+      PGPASSWORD=$DBROOTPW kamdbctl create
+    fi
+  fi
 fi
 
 if [ "$1" = 'kamailio' ]; then
