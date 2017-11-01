@@ -2,9 +2,17 @@
 set -e
 shopt -s extglob
 
+if [ -z "$DBURL" ] && [ -n "$DBHOST" ] && [ -n "$DBRWUSER" ] && [ -n "$DBRWPW" ]; then
+  DBURL="$DBENGINE://$DBRWUSER:$DBRWPW@$DBHOST:$DBPORT/$DBNAME"
+fi
+
 prefix='DEF_'
 file='/etc/kamailio/kamailio-local.cfg'
-cat > $file
+if [ -n "$DBURL" ]; then
+  echo '#!define DBURL "'$DBURL'"' > $file
+else
+  truncate -s 0 $file
+fi
 printenv | grep "^$prefix" | while read -r env; do
   k=${env%=*}
   v=${env#*=}
